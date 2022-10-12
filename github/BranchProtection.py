@@ -127,7 +127,7 @@ class BranchProtection(github.GithubObject.CompletableGithubObject):
         if "restrictions" in attributes:  # pragma no branch
             self._user_push_restrictions = attributes["restrictions"]["users_url"]
             self._team_push_restrictions = attributes["restrictions"]["teams_url"]
-        if "allow_deletions" in attributes: # pragma no branch
+        if "allow_deletions" in attributes:  # pragma no branch
             self._allow_deletions = self._makeBoolAttribute(
                 attributes["allow_deletions"]["enabled"]
             )

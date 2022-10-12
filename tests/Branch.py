@@ -62,6 +62,7 @@ class Branch(Framework.TestCase):
             strict=True,
             require_code_owner_reviews=True,
             required_approving_review_count=2,
+            allow_deletions=True,
         )
         branch_protection = self.protected_branch.get_protection()
         self.assertTrue(branch_protection.required_status_checks.strict)
@@ -76,6 +77,9 @@ class Branch(Framework.TestCase):
         self.assertEqual(
             branch_protection.required_pull_request_reviews.required_approving_review_count,
             2,
+        )
+        self.assertTrue(
+            branch_protection.allow_deletions
         )
 
     def testEditProtectionDismissalUsersWithUserOwnedBranch(self):
