@@ -67,6 +67,14 @@ class BranchProtection(github.GithubObject.CompletableGithubObject):
         self._completeIfNotSet(self._required_pull_request_reviews)
         return self._required_pull_request_reviews.value
 
+    @property
+    def allow_deletions(self):
+        """
+        :type: bool
+        """
+        self._completeIfNotSet(self._allow_deletions)
+        return self._allow_deletions.value
+
     def get_user_push_restrictions(self):
         """
         :rtype: :class:`github.PaginatedList.PaginatedList` of :class:`github.NamedUser.NamedUser`
@@ -97,6 +105,7 @@ class BranchProtection(github.GithubObject.CompletableGithubObject):
         self._required_pull_request_reviews = github.GithubObject.NotSet
         self._user_push_restrictions = github.GithubObject.NotSet
         self._team_push_restrictions = github.GithubObject.NotSet
+        self._allow_deletions = github.GithubObject.NotSet
 
     def _useAttributes(self, attributes):
         if "url" in attributes:  # pragma no branch
@@ -118,3 +127,7 @@ class BranchProtection(github.GithubObject.CompletableGithubObject):
         if "restrictions" in attributes:  # pragma no branch
             self._user_push_restrictions = attributes["restrictions"]["users_url"]
             self._team_push_restrictions = attributes["restrictions"]["teams_url"]
+        if "allow_deletions" in attributes: # pragma no branch
+            self._allow_deletions = self._makeBoolAttribute(
+                attributes["allow_deletions"]["enabled"]
+            )
